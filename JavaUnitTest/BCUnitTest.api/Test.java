@@ -1,19 +1,17 @@
-package bcUnitTest.engine;
+package bcUnitTest.api;
 
-import java.lang.reflect.Method;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public class TestResult {
-	
-	private final TestStatus testStatus;
-	private final Throwable testStackTraceHolder;
-	private final Method testProcedure;
-	
-	// TODO: Create getters for each, no setters
-	
-	public TestResult(Method procedure, TestStatus status, Throwable information) {
-		this.testStatus = status;
-		this.testStackTraceHolder = information;
-		this.testProcedure = procedure;
-	}
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
 
+//Acts as our test annotation in the framework
+public @interface Test {
+
+	// TODO: Create a run class to handle the tests
+	
 }
+

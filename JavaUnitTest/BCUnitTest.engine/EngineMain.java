@@ -1,5 +1,6 @@
 package bcUnitTest.engine;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -44,9 +45,18 @@ public class EngineMain {
 	
 	public static void main (String[] args) {
 		List<TestResult> results = TestEngine.run(TEST_CLASS_NAME);
+		checkInvocation();
         INVOCATION_COUNTER.close();
         checkPositiveResult(results);
         System.out.println("All tests have PASSED");
+	}
+	
+	public static void checkInvocation() {
+		int actual = INVOCATION_COUNTER.testCount;
+		if (actual != NUMBER_OF_TESTS) {
+			String msg = "Expected " + NUMBER_OF_TESTS + " tests to be invoked, but only " + actual + " tests were invoked";
+			throw new AssertionError(msg);
+		}
 	}
 	
 	private static class InvocationCounter extends Handler {
@@ -83,3 +93,4 @@ public class EngineMain {
 		}
 	}
 }
+

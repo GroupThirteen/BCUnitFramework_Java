@@ -10,8 +10,5 @@ import java.lang.annotation.Target;
 
 //Acts as our test annotation in the framework
 public @interface Test {
-
-	// TODO: Create a run class to handle the tests
 	
 }
-

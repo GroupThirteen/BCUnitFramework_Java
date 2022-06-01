@@ -15,5 +15,17 @@ public class TestResult {
 		this.testStackTraceHolder = information;
 		this.testProcedure = procedure;
 	}
+	
+	public TestStatus getStatus() {
+		return this.testStatus;
+	}
+	
+	public Throwable getTraceHolder() {
+		return this.testStackTraceHolder;
+	}
+	
+	public Method getProcedure() {
+		return this.testProcedure;
+	}
 
 }

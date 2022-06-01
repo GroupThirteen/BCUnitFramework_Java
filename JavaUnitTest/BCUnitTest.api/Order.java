@@ -10,6 +10,7 @@ import java.lang.annotation.ElementType;
 @Target({ElementType.TYPE, ElementType.METHOD, ElementType.FIELD})
 @Documented
 
+//Acts as the order annotation to order the test methods
 public @interface Order {
     int value() default 2147483647;
 }

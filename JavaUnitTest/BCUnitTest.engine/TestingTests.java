@@ -1,6 +1,8 @@
 package bcUnitTest.engine;
 
+
 import java.util.logging.Logger;
+import bcUnitTest.api.Order;
 import bcUnitTest.api.Test;
 
 public class TestingTests {
@@ -13,6 +15,7 @@ public class TestingTests {
 		return flag;
 	}
 	
+	@Order(value = 2)
 	@Test
 	public void testPassed() {
 		INVOCATION_LOGGER.entering(TEST_CLASS_NAME, "@Test");
@@ -20,6 +23,7 @@ public class TestingTests {
         System.out.println(msg);
         assert relay(true) : msg;
 	}
+	
 	
 	@Test
     public void testFailed() {
@@ -36,6 +40,7 @@ public class TestingTests {
         assert relay(false) : msg;
     }
 	
+	@Order(value = 1)
 	@Test
     public void testError() {
         INVOCATION_LOGGER.entering(TEST_CLASS_NAME, "@Test");

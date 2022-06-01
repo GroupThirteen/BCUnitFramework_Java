@@ -3,9 +3,13 @@ package bcUnitTest.engine;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
-
+import bcUnitTest.api.Order;
 import bcUnitTest.api.Test;
 
 public class TestEngine {
@@ -35,20 +39,33 @@ public class TestEngine {
 		ClassLoader loader = ClassLoader.getSystemClassLoader();
 		loader.setDefaultAssertionStatus(true);
 		List<TestResult> results = new ArrayList<>();
+		
 		try {
 			Class<?> type = loader.loadClass(testClassName);
 			@SuppressWarnings("deprecation")
 			Object testClassInstance = type.newInstance();
 			Method[] procedures = type.getMethods();
-			List<Method> tests = new ArrayList<>();
-			for (Method procedure : procedures) {
-				if (procedure.getAnnotation(Test.class) != null) {
-					tests.add(procedure);
+			HashMap<Integer, Method> tests = new HashMap<>();
+			
+			for (int i = 0; i < procedures.length; i++) {
+				if (procedures[i].getAnnotation(Test.class) != null) {
+					if(procedures[i].isAnnotationPresent(Order.class)) {
+						Order value = procedures[i].getAnnotation(Order.class);
+						tests.put(value.value(), procedures[i]);
+					} else {
+						tests.put(2147483647 - i, procedures[i]);
+					}
 				}
 			}
-			tests.forEach((test) -> {
-				results.add(run(test, testClassInstance));
-			});
+			
+			Iterator<Entry<Integer, Method>> testIt = tests.entrySet().iterator();
+			
+			while(testIt.hasNext()) {
+				Map.Entry<Integer, Method> mapElement = (Map.Entry<Integer, Method>)testIt.next();
+				Method procedure = mapElement.getValue();
+				results.add(run(procedure, testClassInstance));
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
